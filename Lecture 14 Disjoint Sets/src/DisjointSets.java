@@ -1,6 +1,7 @@
 /*
-* Weighted Quick Union Disjoint Sets
-* */
+ * Weighted Quick Union Disjoint Sets
+ * */
+
 
 public class DisjointSets {
 
@@ -50,9 +51,6 @@ public class DisjointSets {
         while (id[bb] >= 0) {
             bb = id[bb];
         }
-        if (aa == bb) {
-            return true;
-        }
-        return false;
+        return aa == bb;
     }
 }

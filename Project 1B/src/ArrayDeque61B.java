@@ -1,3 +1,5 @@
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +102,18 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T getRecursive(int index) {
-        throw new UnsupportedOperationException("No need to implement getRecursive for proj 1b");
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        if (index == 0) {
+            return items[Math.floorMod(nextFirst + 1, capacity)];
+        }
+        ArrayDeque61B<T> list = new ArrayDeque61B<T>();
+        list.resize(capacity);
+        System.arraycopy(this.items, 0, list.items, 0, capacity);
+        list.nextFirst = Math.floorMod(this.nextFirst + 1, capacity);
+        list.capacity = this.capacity;
+        list.size = this.size - 1;
+        return (T) list.getRecursive(index - 1);
     }
 }

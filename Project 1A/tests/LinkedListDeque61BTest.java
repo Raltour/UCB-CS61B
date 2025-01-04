@@ -94,8 +94,8 @@ public class LinkedListDeque61BTest {
          lld1.addFirst("front");
          lld1.addFirst("middle");
          lld1.addFirst("back");
-         lld1.removeFirst();
-        assertThat(lld1.toList()).containsExactly("middle", "front").inOrder();
+         assertThat(lld1.removeFirst()).isEqualTo("back");
+         assertThat(lld1.toList()).containsExactly("middle", "front").inOrder();
     }
 
     @Test
@@ -104,7 +104,7 @@ public class LinkedListDeque61BTest {
          lld1.addLast("front");
          lld1.addLast("middle");
          lld1.addLast("back");
-         lld1.removeLast();
+         assertThat(lld1.removeLast()).isEqualTo("back");
          assertThat(lld1.toList()).containsExactly("front", "middle").inOrder();
     }
 
@@ -115,11 +115,22 @@ public class LinkedListDeque61BTest {
          lld1.addFirst("middle");
          lld1.addFirst("back");
          assertThat(lld1.get(1)).isEqualTo("middle");
+         assertThat(lld1.get(3)).isNull();
     }
 
     @Test
     public void testEmptyGet() {
          Deque61B<String> lld1 = new LinkedListDeque61B<>();
          assertThat(lld1.get(0)).isEqualTo(null);
+    }
+
+    @Test
+    public void testGetRecursive() {
+        Deque61B<String> lld1 = new LinkedListDeque61B<>();
+        lld1.addFirst("front");
+        lld1.addFirst("middle");
+        lld1.addFirst("back");
+        assertThat(lld1.getRecursive(1)).isEqualTo("middle");
+        assertThat(lld1.getRecursive(3)).isNull();
     }
 }

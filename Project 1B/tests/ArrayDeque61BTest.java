@@ -78,9 +78,8 @@ public class ArrayDeque61BTest {
          list.addFirst(10);
          list.addFirst(20);
          list.addFirst(30);
-         list.removeFirst();
-         list.removeFirst();
-         assertThat(list.toList()).containsExactly(10).inOrder();
+         assertThat(list.removeFirst()).isEqualTo(30);
+         assertThat(list.toList()).containsExactly(20, 10).inOrder();
     }
 
     @Test
@@ -90,7 +89,33 @@ public class ArrayDeque61BTest {
          list.addFirst(20);
          list.addLast(30);
          list.addLast(40);
-         list.removeLast();
+         assertThat(list.removeLast()).isEqualTo(40);
          assertThat(list.toList()).containsExactly(20, 10, 30).inOrder();
+    }
+
+    @Test
+    public void testGet() {
+        Deque61B<String> lld1 = new ArrayDeque61B<>();
+        lld1.addFirst("front");
+        lld1.addFirst("middle");
+        lld1.addFirst("back");
+        assertThat(lld1.get(1)).isEqualTo("middle");
+        assertThat(lld1.get(3)).isNull();
+    }
+
+    @Test
+    public void testEmptyGet() {
+        Deque61B<String> lld1 = new ArrayDeque61B<>();
+        assertThat(lld1.get(0)).isEqualTo(null);
+    }
+
+    @Test
+    public void testGetRecursive() {
+        Deque61B<String> lld1 = new ArrayDeque61B<>();
+        lld1.addFirst("front");
+        lld1.addFirst("middle");
+        lld1.addFirst("back");
+        assertThat(lld1.getRecursive(1)).isEqualTo("middle");
+        assertThat(lld1.getRecursive(3)).isNull();
     }
 }
