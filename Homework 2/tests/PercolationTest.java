@@ -8,7 +8,7 @@ public class PercolationTest {
     /**
      * Enum to represent the state of a cell in the grid. Use this enum to help you write tests.
      * <p>
-     * (0) CLOSED: isOpen() returns true, isFull() return false
+     * (0) CLOSED: isOpen() returns false, isFull() return false
      * <p>
      * (1) OPEN: isOpen() returns true, isFull() returns false
      * <p>
@@ -82,7 +82,28 @@ public class PercolationTest {
     //       write some more tests and delete the fail() line
     @Test
     public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
+        int N = 5;
+        Percolation p = new Percolation(N);
+        // open sites at (r, c) = (0, 1), (2, 0), (3, 1), etc. (0, 0) is top-left
+        int[][] openSites = {
+                {0, 1},
+                {2, 0},
+                {3, 1},
+                {4, 1},
+                {1, 0},
+                {1, 1}
+        };
+        Cell[][] expectedState = {
+                {Cell.CLOSED, Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.FULL, Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.CLOSED, Cell.OPEN, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.CLOSED, Cell.OPEN, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED}
+        };
+        for (int[] site : openSites) {
+            p.open(site[0], site[1]);
+        }
+        assertThat(p.isOpen(2, 0)).isTrue();
+        assertThat(p.isFull(4, 1)).isFalse();
     }
-
 }
