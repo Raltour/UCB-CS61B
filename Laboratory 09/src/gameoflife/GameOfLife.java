@@ -9,6 +9,9 @@ import utils.FileUtils;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import static utils.FileUtils.readFile;
+import static utils.FileUtils.writeFile;
+
 /**
  * Am implementation of Conway's Game of Life using StdDraw.
  * Credits to Erik Nelson, Jasmine Lin and Elana Ho for
@@ -237,15 +240,44 @@ public class GameOfLife {
         // The board is filled with Tileset.NOTHING
         fillWithNothing(nextGen);
 
-        // TODO: Implement this method so that the described transitions occur.
-        // TODO: The current state is represented by TETiles[][] tiles and the next
-        // TODO: state/evolution should be returned in TETile[][] nextGen.
+        TETile[][] temp = new TETile[width + 2][height + 2];
+        fillWithNothing(temp);
 
+        for (int x = 1; x < width + 1; x++) {
+            for (int y = 1; y < height + 1; y++) {
+                temp[x][y] = tiles[x - 1][y - 1];
+            }
+        }
 
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int liveNum = 0;
+                for (int xt = x; xt < x + 3; xt++) {
+                    for (int yt = y; yt < y + 3; yt++) {
+                        if (temp[xt][yt].equals(Tileset.CELL)) {
+                            liveNum++;
+                        }
+                    }
+                }
 
+                if (tiles[x][y].equals(Tileset.CELL)) {
+                    liveNum--;
+                    if (liveNum < 2) {
+                        nextGen[x][y] = Tileset.NOTHING;
+                    } else if (liveNum == 2 || liveNum == 3) {
+                        nextGen[x][y] = Tileset.CELL;
+                    } else {
+                        nextGen[x][y] = Tileset.NOTHING;
+                    }
+                } else {
+                    if (liveNum == 3) {
+                        nextGen[x][y] = Tileset.CELL;
+                    }
+                }
+            }
+        }
 
-        // TODO: Returns the next evolution in TETile[][] nextGen.
-        return null;
+        return nextGen;
     }
 
     /**
@@ -266,20 +298,21 @@ public class GameOfLife {
      * 0 represents NOTHING, 1 represents a CELL.
      */
     public void saveBoard() {
-        // TODO: Save the dimensions of the board into the first line of the file.
-        // TODO: The width and height should be separated by a space, and end with "\n".
+        StringBuilder text = new StringBuilder();
+        text.append(this.width).append(" ").append(this.height).append("\n");
 
+        for (int y = this.height - 1; y >= 0; y--) {
+            for (int x = 0; x < this.width; x++) {
+                if (this.currentState[x][y].equals(Tileset.CELL)) {
+                    text.append(1);
+                } else {
+                    text.append(0);
+                }
+            }
+            text.append("\n");
+        }
 
-
-        // TODO: Save the current state of the board into save.txt. You should
-        // TODO: use the provided FileUtils functions to help you. Make sure
-        // TODO: the orientation is correct! Each line in the board should
-        // TODO: end with a new line character.
-
-
-
-
-
+        writeFile(SAVE_FILE, text.toString());
     }
 
     /**
@@ -287,25 +320,23 @@ public class GameOfLife {
      * 0 represents NOTHING, 1 represents a CELL.
      */
     public TETile[][] loadBoard(String filename) {
-        // TODO: Read in the file.
-
-        // TODO: Split the file based on the new line character.
-
-        // TODO: Grab and set the dimensions from the first line.
-
-        // TODO: Create a TETile[][] to load the board from the file into
-        // TODO: and any additional variables that you think might help.
-
-
-        // TODO: Load the state of the board from the given filename. You can
-        // TODO: use the provided builder variable to help you and FileUtils
-        // TODO: functions. Make sure the orientation is correct!
-
-
-
-
-        // TODO: Return the board you loaded. Replace/delete this line.
-        return null;
+        String text = readFile(filename);
+        String lines[] = text.split("\n");
+        String firstline[] = lines[0].split(" ");
+        this.width = Integer.parseInt(firstline[0]);
+        this.height = Integer.parseInt(firstline[1]);
+        TETile[][] load = new TETile[this.width][this.height];
+        for (int y = this.height - 1; y >= 0; y--) {
+            for (int x = 0; x < this.width; x++) {
+                if (lines[height - y].charAt(x) == "1".charAt(0)) {
+                    load[x][y] = Tileset.CELL;
+                } else {
+                    load[x][y] = Tileset.NOTHING;
+                }
+            }
+        }
+        
+        return load;
     }
 
     /**
