@@ -12,7 +12,6 @@ public class Main {
 
         World myWorld = World.createWorld();
 
-
         ter.renderFrame(myWorld.getWorld());
     }
 }
