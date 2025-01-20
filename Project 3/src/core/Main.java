@@ -31,7 +31,7 @@ public class Main {
 
                 if (key == 'n' || key == 'N') {
                     StdDraw.clear(StdDraw.BLACK);
-                    StdDraw.text(0.2, 0.4, "Enter your Seed(enter to end): ");
+                    StdDraw.text(0.2, 0.4, "Enter your Seed (enter to end) : ");
                     StringBuilder seed = new StringBuilder();
                     while (true) {
                         if (hasNextKeyTyped()) {
@@ -45,16 +45,18 @@ public class Main {
                             }
                             seed.append(getNumericValue(key));
                             StdDraw.clear(StdDraw.BLACK);
-                            StdDraw.text(0.2, 0.4, "Enter your Seed(enter to end): ");
+                            StdDraw.text(0.2, 0.4, "Enter your Seed (enter to end) : ");
                             StdDraw.textLeft(0.4, 0.4, seed.toString());
                         }
                     }
                     TERenderer ter = new TERenderer();
                     ter.initialize(WIDTH, HEIGHT);
                     World myWorld = World.createWorld(Integer.parseInt(seed.toString()));
-                    ter.renderFrame(myWorld.getWorld());
-
-                    break;
+                    while (!hasNextKeyTyped()) {
+                        ter.renderFrame(myWorld.getWorld());
+                    }
+                    StdDraw.setCanvasSize(800, 600);
+                    StdDraw.clear(StdDraw.BLACK);
                 }
             }
         }
