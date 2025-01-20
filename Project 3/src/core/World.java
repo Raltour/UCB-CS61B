@@ -1,5 +1,6 @@
 package core;
 
+import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
 
@@ -14,18 +15,19 @@ public class World {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     public static final int BLOCK_SIZE = 10;//在随机生成room时用作一个参考的大小
+    public static final int ROOM_MAX_NUMBER = 10;
+    public int roomNumber = 0;
+
 
     private TETile[][] myworld;
     private int seed;
     Random rand;
-    private int roomNumber;
 
     private World() {
         myworld = new TETile[WIDTH][HEIGHT];
         fillWorldWithBlanck(myworld);
         seed = 4321;
         rand = new Random(seed);
-        roomNumber = 0;
         this.randomGenerate();
     }
 
@@ -46,8 +48,15 @@ public class World {
         }
 
         private boolean generateRoom(TETile[][] world) {
-            if (this.x1 < 0 || this.x2 >= WIDTH || this.y1 < 0 || this.y2 >= HEIGHT) {
+            if (this.x1 < 0 || this.x2 >= WIDTH || this.y1 < 0 || this.y2 >= HEIGHT || roomNumber >= ROOM_MAX_NUMBER) {
                 return false;
+            }
+            for (int i = x1; i <= x2; i ++) {
+                for (int j = y1; j <= y2; j ++) {
+                    if (world[i][j] == Tileset.FLOOR) {
+                        return false;
+                    }
+                }
             }
             for (int i = x1; i <= x2; i++) {
                 world[i][y1] = Tileset.WALL;
@@ -62,6 +71,7 @@ public class World {
                     world[i][j] = Tileset.FLOOR;
                 }
             }
+            roomNumber++;
             return true;
         }
 
