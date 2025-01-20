@@ -8,6 +8,7 @@ import java.awt.*;
 import static core.World.HEIGHT;
 import static core.World.WIDTH;
 import static core.World.DEFAULT_SEED;
+import static edu.princeton.cs.algs4.StdDraw.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,11 +24,19 @@ public class Main {
         StdDraw.text(0.5, 0.45, "Load Game (L)");
         StdDraw.text(0.5, 0.4, "Quit (Q)");
 
+        while (true) {
+            if (hasNextKeyTyped()) {
+                int key = nextKeyTyped();
 
-//        TERenderer ter = new TERenderer();
-//        ter.initialize(WIDTH, HEIGHT);
-//
-//        World myWorld = World.createWorld(DEFAULT_SEED);
-//        ter.renderFrame(myWorld.getWorld());
+                if (key == 'n' || key == 'N') {
+                    TERenderer ter = new TERenderer();
+                    ter.initialize(WIDTH, HEIGHT);
+                    World myWorld = World.createWorld(DEFAULT_SEED);
+                    ter.renderFrame(myWorld.getWorld());
+
+                    break;
+                }
+            }
+        }
     }
 }
