@@ -1,10 +1,8 @@
 package core;
 
-import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
 
-import static utils.RandomUtils.bernoulli;
 import static utils.RandomUtils.uniform;
 
 import java.util.Random;
@@ -86,7 +84,7 @@ public class World {
                     int y11 = uniform(rand, y - height + 2, y);
                     Room nextRoom = new Room(x, y11, x + uniform(rand, 3, BLOCK_SIZE), y11 + height - 1);
                     if (nextRoom.generateRoom(world)) {
-                        Hallway hw = new Hallway(x2, y - 1, x, y + 1, 0);
+                        Hallway hw = new Hallway(x2, y, x, y);
                         hw.generateHallway(world);
                         nextRoom.generateNextRoom(world);
                     }
@@ -98,7 +96,7 @@ public class World {
                     int y11 = uniform(rand, y - height + 2, y);
                     Room nextRoom = new Room(x - uniform(rand, 3, BLOCK_SIZE), y11, x, y11 + height - 1);
                     if (nextRoom.generateRoom(world)) {
-                        Hallway hw = new Hallway(x, y - 1, x1, y + 1, 0);
+                        Hallway hw = new Hallway(x, y, x1, y);
                         hw.generateHallway(world);
                         nextRoom.generateNextRoom(world);
                     }
@@ -110,7 +108,7 @@ public class World {
                     int x11 = uniform(rand, x - width + 2, x);
                     Room nextRoom = new Room(x11, y, x11 + width - 1, y + uniform(rand, 3, BLOCK_SIZE));
                     if (nextRoom.generateRoom(world)) {
-                        Hallway hw = new Hallway(x - 1, y2, x + 1, y, 1);
+                        Hallway hw = new Hallway(x , y2, x , y);
                         hw.generateHallway(world);
                         nextRoom.generateNextRoom(world);
                     }
@@ -122,7 +120,7 @@ public class World {
                     int x11 = uniform(rand, x - width + 2, x);
                     Room nextRoom = new Room(x11, y - uniform(rand, 3, BLOCK_SIZE), x11 + width - 1, y);
                     if (nextRoom.generateRoom(world)) {
-                        Hallway hw = new Hallway(x - 1, y, x + 1, y1, 1);
+                        Hallway hw = new Hallway(x , y, x, y1);
                         hw.generateHallway(world);
                         nextRoom.generateNextRoom(world);
                     }
@@ -138,34 +136,32 @@ public class World {
         private int y1;
         private int x2;
         private int y2;
-        private int directions;//0表示横向，1表示纵向
 
-        private Hallway(int x1, int y1, int x2, int y2, int directions) {
+        private Hallway(int x1, int y1, int x2, int y2) {
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
             this.y2 = y2;
-            this.directions = directions;
         }
 
         private void generateHallway(TETile[][] world) {
-            if (directions == 0) {
+            if (y1 == y2) {
                 for (int i = x1; i <= x2; i++) {
                     if (world[i][y1 - 1] == Tileset.FLOOR && world[i][y1] == Tileset.FLOOR && world[i][y1 + 1] == Tileset.FLOOR) {
                         continue;
                     }
-                    world[i][y1] = Tileset.WALL;
-                    world[i][y2] = Tileset.WALL;
-                    world[i][y1 + 1] = Tileset.FLOOR;
+                    world[i][y1 - 1] = Tileset.WALL;
+                    world[i][y1] = Tileset.FLOOR;
+                    world[i][y1 + 1] = Tileset.WALL;
                 }
-            } if (directions == 1) {
+            } if (x1 == x2) {
                 for (int i = y1; i <= y2; i++) {
                     if (world[x1 - 1][i] == Tileset.FLOOR && world[x1][i] == Tileset.FLOOR && world[x1 + 1][i] == Tileset.FLOOR) {
                         continue;
                     }
-                    world[x1][i] = Tileset.WALL;
-                    world[x2][i] = Tileset.WALL;
-                    world[x1 + 1][i] = Tileset.FLOOR;
+                    world[x1 - 1][i] = Tileset.WALL;
+                    world[x1][i] = Tileset.FLOOR;
+                    world[x1 + 1][i] = Tileset.WALL;
                 }
             }
         }
