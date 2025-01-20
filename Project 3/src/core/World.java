@@ -13,6 +13,7 @@ public class World {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     public static final int BLOCK_SIZE = 10;//在随机生成room时用作一个参考的大小
+    public static final int DEFAULT_SEED = 4321;
     public static final int ROOM_MAX_NUMBER = 10;
     public int roomNumber = 0;
 
@@ -21,10 +22,10 @@ public class World {
     private int seed;
     Random rand;
 
-    private World() {
+    private World(int seed) {
         myworld = new TETile[WIDTH][HEIGHT];
         fillWorldWithBlanck(myworld);
-        seed = 4321;
+        this.seed = seed;
         rand = new Random(seed);
         this.randomGenerate();
     }
@@ -178,8 +179,8 @@ public class World {
         }
     }
 
-    public static World createWorld() {
-        return new World();
+    public static World createWorld(int seed) {
+        return new World(seed);
     }
 
     public TETile[][] getWorld() {
