@@ -39,6 +39,10 @@ public class Main {
                             if (key == '\n') {
                                 break;
                             }
+                            int keyNum = getNumericValue(key);
+                            if (keyNum < 0 || keyNum > 9) {
+                                continue;
+                            }
                             seed.append(getNumericValue(key));
                             StdDraw.clear(StdDraw.BLACK);
                             StdDraw.text(0.2, 0.4, "Enter your Seed(enter to end): ");

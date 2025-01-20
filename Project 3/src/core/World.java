@@ -76,7 +76,7 @@ public class World {
         }
 
         private void generateNextRoom(TETile[][] world) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 40; i++) {
                 int p = uniform(rand, 0, 5);
                 if (p == 0) {
                     //向右生成横向走廊
