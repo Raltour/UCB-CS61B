@@ -14,20 +14,18 @@ public class World {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     public static final int BLOCK_SIZE = 10;//在随机生成room时用作一个参考的大小
-    public int BLOCK_WIDTH = WIDTH / BLOCK_SIZE;
-    public int BLOCK_HEIGHT = HEIGHT / BLOCK_SIZE;
-    public int ROOM_NUM = WIDTH / BLOCK_SIZE + HEIGHT / BLOCK_SIZE;
-    public double CONNECT_PROBABILITY = 0.8;
 
     private TETile[][] myworld;
     private int seed;
     Random rand;
+    private int roomNumber;
 
     private World() {
         myworld = new TETile[WIDTH][HEIGHT];
         fillWorldWithBlanck(myworld);
-        seed = 1234;
+        seed = 4321;
         rand = new Random(seed);
+        roomNumber = 0;
         this.randomGenerate();
     }
 
@@ -68,7 +66,7 @@ public class World {
         }
 
         private void generateNextRoom(TETile[][] world) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 2; i++) {
                 int p = uniform(rand, 0, 5);
                 if (p == 0) {
                     //向右生成横向走廊
@@ -84,6 +82,16 @@ public class World {
                     }
                 } else if(p == 1) {
                     //向左生成横向走廊
+                    int x = x1 - uniform(3, 10);
+                    int y = y1 + uniform(rand, 1, y2 - y1);
+                    int height = uniform(rand, 4, BLOCK_SIZE);
+                    int y11 = uniform(rand, y - height + 2, y);
+                    Room nextRoom = new Room(x - uniform(rand, 3, BLOCK_SIZE), y11, x, y11 + height - 1);
+                    if (nextRoom.generateRoom(world)) {
+                        Hallway hw = new Hallway(x, y - 1, x1, y + 1, 0);
+                        hw.generateHallway(world);
+                        nextRoom.generateNextRoom(world);
+                    }
                 } else if(p == 2) {
                     //向上生成纵向走廊
                     int x = x1 + uniform(rand, 1, x2 - x1);
@@ -91,8 +99,23 @@ public class World {
                     int width = uniform(rand, 4, BLOCK_SIZE);
                     int x11 = uniform(rand, x - width + 2, x);
                     Room nextRoom = new Room(x11, y, x11 + width - 1, y + uniform(rand, 3, BLOCK_SIZE));
+                    if (nextRoom.generateRoom(world)) {
+                        Hallway hw = new Hallway(x - 1, y2, x + 1, y, 1);
+                        hw.generateHallway(world);
+                        nextRoom.generateNextRoom(world);
+                    }
                 } else if(p == 3) {
                     //向下生成纵向走廊
+                    int x = x1 + uniform(rand, 1, x2 - x1);
+                    int y = y2 - uniform(rand, 3, 10);
+                    int width = uniform(rand, 4, BLOCK_SIZE);
+                    int x11 = uniform(rand, x - width + 2, x);
+                    Room nextRoom = new Room(x11, y - uniform(rand, 3, BLOCK_SIZE), x11 + width - 1, y);
+                    if (nextRoom.generateRoom(world)) {
+                        Hallway hw = new Hallway(x - 1, y, x + 1, y1, 1);
+                        hw.generateHallway(world);
+                        nextRoom.generateNextRoom(world);
+                    }
                 }
             }
         }
@@ -118,12 +141,18 @@ public class World {
         private void generateHallway(TETile[][] world) {
             if (directions == 0) {
                 for (int i = x1; i <= x2; i++) {
+                    if (world[i - 1][y1 + 1] == Tileset.WALL && world[i][y1 + 1] == Tileset.FLOOR && world[i + 1][y1 + 1] == Tileset.WALL) {
+                        continue;
+                    }
                     world[i][y1] = Tileset.WALL;
                     world[i][y2] = Tileset.WALL;
                     world[i][y1 + 1] = Tileset.FLOOR;
                 }
             } if (directions == 1) {
                 for (int i = y1; i <= y2; i++) {
+                    if (world[x1 + 1][i - 1] == Tileset.WALL && world[x1 + 1][i] == Tileset.FLOOR && world[x1 + 1][i + 1] == Tileset.WALL) {
+                        continue;
+                    }
                     world[x1][i] = Tileset.WALL;
                     world[x2][i] = Tileset.WALL;
                     world[x1 + 1][i] = Tileset.FLOOR;
