@@ -53,7 +53,7 @@ public class World {
             }
             for (int i = x1; i <= x2; i ++) {
                 for (int j = y1; j <= y2; j ++) {
-                    if (world[i][j] == Tileset.FLOOR) {
+                    if (world[i][j] == Tileset.FLOOR || world[i][j] == Tileset.WALL) {
                         return false;
                     }
                 }
@@ -151,7 +151,7 @@ public class World {
         private void generateHallway(TETile[][] world) {
             if (directions == 0) {
                 for (int i = x1; i <= x2; i++) {
-                    if (world[i - 1][y1 + 1] == Tileset.WALL && world[i][y1 + 1] == Tileset.FLOOR && world[i + 1][y1 + 1] == Tileset.WALL) {
+                    if (world[i][y1 - 1] == Tileset.FLOOR && world[i][y1] == Tileset.FLOOR && world[i][y1 + 1] == Tileset.FLOOR) {
                         continue;
                     }
                     world[i][y1] = Tileset.WALL;
@@ -160,7 +160,7 @@ public class World {
                 }
             } if (directions == 1) {
                 for (int i = y1; i <= y2; i++) {
-                    if (world[x1 + 1][i - 1] == Tileset.WALL && world[x1 + 1][i] == Tileset.FLOOR && world[x1 + 1][i + 1] == Tileset.WALL) {
+                    if (world[x1 - 1][i] == Tileset.FLOOR && world[x1][i] == Tileset.FLOOR && world[x1 + 1][i] == Tileset.FLOOR) {
                         continue;
                     }
                     world[x1][i] = Tileset.WALL;
