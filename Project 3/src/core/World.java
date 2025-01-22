@@ -10,11 +10,11 @@ import java.util.Random;
 import static edu.princeton.cs.algs4.StdRandom.uniform;
 
 public class World {
-    public static final int WIDTH = 120;
-    public static final int HEIGHT = 60;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 40;
     public static final int BLOCK_SIZE = 10;//在随机生成room时用作一个参考的大小
     public static final int DEFAULT_SEED = 4321;
-    public static final int ROOM_MAX_NUMBER = 100;
+    public static final int ROOM_MAX_NUMBER = 50;
     public int roomNumber = 0;
 
 
@@ -76,7 +76,7 @@ public class World {
         }
 
         private void generateNextRoom(TETile[][] world) {
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 20; i++) {
                 int p = uniform(rand, 0, 5);
                 if (p == 0) {
                     //向右生成横向走廊

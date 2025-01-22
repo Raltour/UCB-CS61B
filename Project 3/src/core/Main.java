@@ -16,15 +16,17 @@ public class Main {
 
         startGame();
 
-        int key = getKeyInput();
-
-        if (key == 'n' || key == 'N') {
-            runNewWorld();
-        } else if (key == 'q' || key == 'Q') {
-            System.exit(0);
+        while (true) {
+            if (hasNextKeyTyped()) {
+                int key = getKeyInput();
+                if (key == 'n' || key == 'N') {
+                    StdDraw.clear();
+                    runNewWorld();
+                } else if (key == 'q' || key == 'Q') {
+                    System.exit(0);
+                }
+            }
         }
-
-        System.exit(0);
     }
 
     public static void startGame() {
@@ -49,7 +51,7 @@ public class Main {
         }
     }
 
-    public static void runNewWorld() {
+    public static int runNewWorld() {
         StdDraw.clear(StdDraw.BLACK);
         StdDraw.text(0.2, 0.4, "Enter your Seed (enter to end) : ");
         StringBuilder seed = new StringBuilder();
@@ -72,10 +74,10 @@ public class Main {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
         World myWorld = World.createWorld(Integer.parseInt(seed.toString()));
+        ter.renderFrame(myWorld.getWorld());
         while (!hasNextKeyTyped()) {
-            ter.renderFrame(myWorld.getWorld());
         }
-        StdDraw.setCanvasSize(800, 600);
-        StdDraw.clear(StdDraw.BLACK);
+
+        return 0;
     }
 }
