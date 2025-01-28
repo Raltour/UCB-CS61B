@@ -80,11 +80,11 @@ public class Main {
                 } else if (key == 'w' || key == 'W') {
                     myWorld.userAvater.moveUp();
                 } else if (key == 's' || key == 'S') {
-                    myWorld.userAvater.moveDown(myWorld.getWorld());
+                    myWorld.userAvater.moveDown();
                 } else if (key == 'd' || key == 'D') {
-                    myWorld.userAvater.moveRight(myWorld.getWorld());
+                    myWorld.userAvater.moveRight();
                 } else if (key == 'a' || key == 'A') {
-                    myWorld.userAvater.moveLeft(myWorld.getWorld());
+                    myWorld.userAvater.moveLeft();
                 }
             }
             ter.renderFrame(myWorld.getWorld());

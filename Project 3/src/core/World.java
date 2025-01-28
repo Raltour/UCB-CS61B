@@ -29,19 +29,19 @@ public class World {
         this.seed = seed;
         rand = new Random(seed);
         this.randomGenerate();
-        this.userAvater = new avatar(myworld, rand);
+        this.userAvater = new avatar();
     }
 
     public class avatar {
         int x;
         int y;
 
-        public avatar(TETile[][] world, Random rand) {
+        public avatar() {
             while (true) {
                 int xx = uniform(rand, WIDTH);
                 int yy = uniform(rand, HEIGHT);
-                if (world[x][y] == Tileset.FLOOR) {
-                    world[x][y] = Tileset.AVATAR;
+                if (myworld[x][y] == Tileset.FLOOR) {
+                    myworld[x][y] = Tileset.AVATAR;
                     this.x = xx;
                     this.y = yy;
                 }
@@ -57,7 +57,7 @@ public class World {
             }
         }
 
-        public void moveDown(TETile[][] myworld) {
+        public void moveDown() {
             if (myworld[x][y - 1] != Tileset.WALL) {
                 myworld[x][y] = Tileset.FLOOR;
                 y--;
@@ -65,7 +65,7 @@ public class World {
             }
         }
 
-        public void moveLeft(TETile[][] myworld) {
+        public void moveLeft() {
             if (myworld[x - 1][y] != Tileset.WALL) {
                 myworld[x][y] = Tileset.FLOOR;
                 x--;
@@ -73,11 +73,11 @@ public class World {
             }
         }
 
-        public void moveRight(TETile[][] myworld) {
+        public void moveRight() {
             if (myworld[x + 1][y] != Tileset.WALL) {
                 myworld[x][y] = Tileset.FLOOR;
                 x++;
-                myworld[x + 1][y] = Tileset.AVATAR;
+                myworld[x][y] = Tileset.AVATAR;
             }
         }
     }
