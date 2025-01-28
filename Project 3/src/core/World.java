@@ -40,8 +40,8 @@ public class World {
             while (true) {
                 int xx = uniform(rand, WIDTH);
                 int yy = uniform(rand, HEIGHT);
-                if (myworld[x][y] == Tileset.FLOOR) {
-                    myworld[x][y] = Tileset.AVATAR;
+                if (myworld[xx][yy] == Tileset.FLOOR) {
+                    myworld[xx][yy] = Tileset.AVATAR;
                     this.x = xx;
                     this.y = yy;
                 }
