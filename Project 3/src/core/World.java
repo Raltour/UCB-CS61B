@@ -16,6 +16,7 @@ public class World {
     public static final int DEFAULT_SEED = 4321;
     public static final int ROOM_MAX_NUMBER = 50;
     public int roomNumber = 0;
+    public avatar userAvater;
 
 
     private TETile[][] myworld;
@@ -28,9 +29,58 @@ public class World {
         this.seed = seed;
         rand = new Random(seed);
         this.randomGenerate();
+        this.userAvater = new avatar(myworld, rand);
     }
 
+    public class avatar {
+        int x;
+        int y;
 
+        public avatar(TETile[][] world, Random rand) {
+            while (true) {
+                int xx = uniform(rand, WIDTH);
+                int yy = uniform(rand, HEIGHT);
+                if (world[x][y] == Tileset.FLOOR) {
+                    world[x][y] = Tileset.AVATAR;
+                    this.x = xx;
+                    this.y = yy;
+                }
+                break;
+            }
+        }
+
+        public void moveUp() {
+            if (myworld[x][y + 1] != Tileset.WALL) {
+                myworld[x][y] = Tileset.FLOOR;
+                y++;
+                myworld[x][y] = Tileset.AVATAR;
+            }
+        }
+
+        public void moveDown(TETile[][] myworld) {
+            if (myworld[x][y - 1] != Tileset.WALL) {
+                myworld[x][y] = Tileset.FLOOR;
+                y--;
+                myworld[x][y] = Tileset.AVATAR;
+            }
+        }
+
+        public void moveLeft(TETile[][] myworld) {
+            if (myworld[x - 1][y] != Tileset.WALL) {
+                myworld[x][y] = Tileset.FLOOR;
+                x--;
+                myworld[x][y] = Tileset.AVATAR;
+            }
+        }
+
+        public void moveRight(TETile[][] myworld) {
+            if (myworld[x + 1][y] != Tileset.WALL) {
+                myworld[x][y] = Tileset.FLOOR;
+                x++;
+                myworld[x + 1][y] = Tileset.AVATAR;
+            }
+        }
+    }
 
     private class Room {
         private int x1;

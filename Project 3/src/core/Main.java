@@ -72,11 +72,22 @@ public class Main {
         ter.initialize(WIDTH, HEIGHT);
         World myWorld = World.createWorld(Integer.parseInt(seed.toString()));
         ter.renderFrame(myWorld.getWorld());
-        while (!hasNextKeyTyped()) {
-            char key = nextKeyTyped();
-            if (key == 'q' || key == 'Q') {
-                System.exit(0);
+        while (true) {
+            if (hasNextKeyTyped()) {
+                char key = nextKeyTyped();
+                if (key == 'q' || key == 'Q') {
+                    System.exit(0);
+                } else if (key == 'w' || key == 'W') {
+                    myWorld.userAvater.moveUp();
+                } else if (key == 's' || key == 'S') {
+                    myWorld.userAvater.moveDown(myWorld.getWorld());
+                } else if (key == 'd' || key == 'D') {
+                    myWorld.userAvater.moveRight(myWorld.getWorld());
+                } else if (key == 'a' || key == 'A') {
+                    myWorld.userAvater.moveLeft(myWorld.getWorld());
+                }
             }
+            ter.renderFrame(myWorld.getWorld());
         }
 
 
