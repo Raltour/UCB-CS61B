@@ -7,24 +7,21 @@ import java.awt.*;
 
 import static core.World.HEIGHT;
 import static core.World.WIDTH;
-import static core.World.DEFAULT_SEED;
 import static edu.princeton.cs.algs4.StdDraw.*;
 import static java.lang.Character.getNumericValue;
 
 public class Main {
+
     public static void main(String[] args) {
 
         startGame();
 
         while (true) {
-            if (hasNextKeyTyped()) {
-                int key = getKeyInput();
-                if (key == 'n' || key == 'N') {
-                    StdDraw.clear();
-                    runNewWorld();
-                } else if (key == 'q' || key == 'Q') {
-                    System.exit(0);
-                }
+            int key = getKeyInput();
+            if (key == 'n' || key == 'N') {
+                runNewWorld();
+            } else if (key == 'q' || key == 'Q') {
+                System.exit(0);
             }
         }
     }
@@ -51,7 +48,7 @@ public class Main {
         }
     }
 
-    public static int runNewWorld() {
+    public static void runNewWorld() {
         StdDraw.clear(StdDraw.BLACK);
         StdDraw.text(0.2, 0.4, "Enter your Seed (enter to end) : ");
         StringBuilder seed = new StringBuilder();
@@ -76,8 +73,16 @@ public class Main {
         World myWorld = World.createWorld(Integer.parseInt(seed.toString()));
         ter.renderFrame(myWorld.getWorld());
         while (!hasNextKeyTyped()) {
+            char key = nextKeyTyped();
+            if (key == 'q' || key == 'Q') {
+                System.exit(0);
+            }
         }
 
-        return 0;
+
+
     }
+
+
+
 }
