@@ -44,8 +44,8 @@ public class World {
                     myworld[xx][yy] = Tileset.AVATAR;
                     this.x = xx;
                     this.y = yy;
+                    break;
                 }
-                break;
             }
         }
 
