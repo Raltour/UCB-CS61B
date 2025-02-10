@@ -12,11 +12,11 @@ import static edu.princeton.cs.algs4.StdDraw.*;
 import static java.lang.Character.getNumericValue;
 
 public class Main {
-    private StateMachine stateMachine;
+    private static StateMachine stateMachine;
 
     public Main() {}
 
-    public void gameLoop() {
+    public static void gameLoop() {
         stateMachine = new StateMachine();
         while (true) {
             int pressed = getKeyInput();
@@ -34,8 +34,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        main.gameLoop();
+        gameLoop();
 
 
 

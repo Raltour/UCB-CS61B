@@ -6,11 +6,14 @@ public class StateMachine {
     private HashMap<String, GameState> gameStates;
     private String curr;
     private String StartMenu;
+    private StartMenu startMenu;
 
     public StateMachine() {
-        curr = "StartMenu";
         gameStates = new HashMap<>();
-        gameStates.put(StartMenu, new StartMenu());
+        startMenu = new StartMenu();
+        gameStates.put(StartMenu, startMenu);
+        curr = "StartMenu";
+        startMenu.enter();
     }
 
     public void update(int pressed) {

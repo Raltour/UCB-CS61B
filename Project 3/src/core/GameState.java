@@ -1,7 +1,7 @@
 package core;
 
 public interface GameState {
-//    StateMachine mach;
+//    StateMachine mach = main.stateMachine;
 
     void update(int pressed);
 
