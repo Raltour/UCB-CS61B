@@ -5,13 +5,12 @@ import java.util.HashMap;
 public class StateMachine {
     private HashMap<String, GameState> gameStates;
     private String curr;
-    private String StartMenu;
     private StartMenu startMenu;
 
     public StateMachine() {
         gameStates = new HashMap<>();
         startMenu = new StartMenu();
-        gameStates.put(StartMenu, startMenu);
+        gameStates.put("StartMenu", startMenu);
         curr = "StartMenu";
         startMenu.enter();
     }

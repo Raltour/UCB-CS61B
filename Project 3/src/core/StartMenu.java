@@ -5,14 +5,14 @@ import edu.princeton.cs.algs4.StdDraw;
 import java.awt.*;
 
 public class StartMenu implements GameState{
-    public StartMenu() {
-
-    }
+    public StartMenu() {}
 
     @Override
     public void update(int pressed) {
         if (pressed == 'q' || pressed == 'Q') {
             System.exit(0);
+        } else if (pressed == 'n' || pressed == 'N') {
+            mach.changeState("EnterSeed");
         }
     }
 

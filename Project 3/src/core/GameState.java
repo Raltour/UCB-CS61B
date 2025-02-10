@@ -1,7 +1,9 @@
 package core;
 
+import static core.Main.stateMachine;
+
 public interface GameState {
-//    StateMachine mach = main.stateMachine;
+    StateMachine mach = stateMachine;
 
     void update(int pressed);
 

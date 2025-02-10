@@ -12,9 +12,7 @@ import static edu.princeton.cs.algs4.StdDraw.*;
 import static java.lang.Character.getNumericValue;
 
 public class Main {
-    private static StateMachine stateMachine;
-
-    public Main() {}
+    public static StateMachine stateMachine;
 
     public static void gameLoop() {
         stateMachine = new StateMachine();
@@ -42,19 +40,6 @@ public class Main {
     }
 
 
-    public static void startGame() {
-        StdDraw.setCanvasSize(800, 600);
-        StdDraw.clear(StdDraw.BLACK);
-        StdDraw.setPenColor(StdDraw.WHITE);
-        Font font = new Font("Arial", Font.BOLD, 40);
-        StdDraw.setFont(font);
-        StdDraw.text(0.5, 0.8, "CS61B: THE GAME");
-        font = new Font("Arial", Font.PLAIN, 20);
-        StdDraw.setFont(font);
-        StdDraw.text(0.5, 0.5, "New Game (N)");
-        StdDraw.text(0.5, 0.45, "Load Game (L)");
-        StdDraw.text(0.5, 0.4, "Quit (Q)");
-    }
 
 
 
