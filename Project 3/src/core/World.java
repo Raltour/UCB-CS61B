@@ -13,8 +13,10 @@ public class World {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
     public static final int BLOCK_SIZE = 10;//在随机生成room时用作一个参考的大小
-    public static final int DEFAULT_SEED = 4321;
     public static final int ROOM_MAX_NUMBER = 50;
+    public static final int minHallway = 5;
+    public static final int maxHallway = 20;
+    public static final int generateTry = 25;
     public int roomNumber = 0;
     public avatar userAvater;
 
@@ -126,11 +128,11 @@ public class World {
         }
 
         private void generateNextRoom(TETile[][] world) {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < generateTry; i++) {
                 int p = uniform(rand, 0, 5);
                 if (p == 0) {
                     //向右生成横向走廊
-                    int x = x2 + uniform(3, 10);
+                    int x = x2 + uniform(minHallway, maxHallway);
                     int y = y1 + uniform(rand, 1, y2 - y1);
                     int height = uniform(rand, 4, BLOCK_SIZE);
                     int y11 = uniform(rand, y - height + 2, y);
@@ -143,7 +145,7 @@ public class World {
                     }
                 } else if(p == 1) {
                     //向左生成横向走廊
-                    int x = x1 - uniform(3, 10);
+                    int x = x1 - uniform(minHallway, maxHallway);
                     int y = y1 + uniform(rand, 1, y2 - y1);
                     int height = uniform(rand, 4, BLOCK_SIZE);
                     int y11 = uniform(rand, y - height + 2, y);
@@ -157,7 +159,7 @@ public class World {
                 } else if(p == 2) {
                     //向上生成纵向走廊
                     int x = x1 + uniform(rand, 1, x2 - x1);
-                    int y = y2 + uniform(rand, 3, 10);
+                    int y = y2 + uniform(rand, minHallway, maxHallway);
                     int width = uniform(rand, 4, BLOCK_SIZE);
                     int x11 = uniform(rand, x - width + 2, x);
                     Room nextRoom = new Room(x11, y,
@@ -170,7 +172,7 @@ public class World {
                 } else if(p == 3) {
                     //向下生成纵向走廊
                     int x = x1 + uniform(rand, 1, x2 - x1);
-                    int y = y2 - uniform(rand, 3, 10);
+                    int y = y2 - uniform(rand, minHallway, maxHallway);
                     int width = uniform(rand, 4, BLOCK_SIZE);
                     int x11 = uniform(rand, x - width + 2, x);
                     Room nextRoom = new Room(x11, y - uniform(rand, 3, BLOCK_SIZE),

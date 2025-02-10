@@ -2,6 +2,7 @@ package core;
 
 import edu.princeton.cs.algs4.StdDraw;
 import tileengine.TERenderer;
+import tileengine.Tileset;
 
 import java.awt.*;
 
@@ -88,6 +89,21 @@ public class Main {
                 }
             }
             ter.renderFrame(myWorld.getWorld());
+            int mX = (int) mouseX();
+            int mY = (int) mouseY();
+            StringBuilder text = new StringBuilder();
+            text.append("Tile: ");
+            if (myWorld.getWorld()[mX][mY] == Tileset.WALL) {
+                text.append("Wall");
+            } else if (myWorld.getWorld()[mX][mY] == Tileset.FLOOR) {
+                text.append("Floor");
+            } else if (myWorld.getWorld()[mX][mY] == Tileset.AVATAR) {
+                text.append("Avatar");
+            } else if (myWorld.getWorld()[mX][mY] == Tileset.NOTHING) {
+                text.append("Nothing");
+            }
+            textLeft(0.1, 0.9, text.toString());
+
         }
 
 
