@@ -5,14 +5,12 @@ import java.util.HashMap;
 public class StateMachine {
     private HashMap<String, GameState> gameStates;
     private String curr;
-    private StartMenu startMenu;
 
     public StateMachine() {
         gameStates = new HashMap<>();
-        startMenu = new StartMenu();
-        gameStates.put("StartMenu", startMenu);
+        gameStates.put("StartMenu", new StartMenu());
         curr = "StartMenu";
-        startMenu.enter();
+        gameStates.get(curr).enter();
     }
 
     public void update(int pressed) {
