@@ -9,6 +9,7 @@ public class StateMachine {
     public StateMachine() {
         gameStates = new HashMap<>();
         gameStates.put("StartMenu", new StartMenu());
+        gameStates.put("EnterSeed", new EnterSeed());
         curr = "StartMenu";
         gameStates.get(curr).enter();
     }
@@ -23,6 +24,7 @@ public class StateMachine {
 
     public void changeState(String to) {
         gameStates.get(curr).exit();
+        curr = to;
         gameStates.get(to).enter();
     }
 }

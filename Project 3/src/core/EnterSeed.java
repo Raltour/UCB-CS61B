@@ -5,6 +5,10 @@ import edu.princeton.cs.algs4.StdDraw;
 public class EnterSeed implements GameState {
     private StringBuilder seed;
 
+    public EnterSeed() {
+        seed = new StringBuilder();
+    }
+
     @Override
     public void update(int pressed) {
 
@@ -20,6 +24,7 @@ public class EnterSeed implements GameState {
     @Override
     public void enter() {
         seed = new StringBuilder();
+        StdDraw.clear(StdDraw.BLACK);
         render();
     }
 

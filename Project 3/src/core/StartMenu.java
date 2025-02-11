@@ -13,8 +13,6 @@ public class StartMenu implements GameState{
             System.exit(0);
         } else if (pressed == 'n' || pressed == 'N') {
             mach.changeState("EnterSeed");
-        } else {
-
         }
     }
 
@@ -35,16 +33,7 @@ public class StartMenu implements GameState{
     @Override
     public void enter() {
         StdDraw.setCanvasSize(800, 600);
-        StdDraw.clear(StdDraw.BLACK);
-        StdDraw.setPenColor(StdDraw.WHITE);
-        Font font = new Font("Arial", Font.BOLD, 40);
-        StdDraw.setFont(font);
-        StdDraw.text(0.5, 0.8, "CS61B: THE GAME");
-        font = new Font("Arial", Font.PLAIN, 20);
-        StdDraw.setFont(font);
-        StdDraw.text(0.5, 0.5, "New Game (N)");
-        StdDraw.text(0.5, 0.45, "Load Game (L)");
-        StdDraw.text(0.5, 0.4, "Quit (Q)");
+        render();
     }
 
     @Override
