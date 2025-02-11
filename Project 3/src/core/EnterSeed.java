@@ -2,8 +2,14 @@ package core;
 
 import edu.princeton.cs.algs4.StdDraw;
 
+import static java.lang.Character.getNumericValue;
+
 public class EnterSeed implements GameState {
     private StringBuilder seed;
+
+//    public static int getSeed() {
+//        return seed;
+//    }
 
     public EnterSeed() {
         seed = new StringBuilder();
@@ -11,7 +17,12 @@ public class EnterSeed implements GameState {
 
     @Override
     public void update(int pressed) {
-
+        if (pressed == '\n') {
+            mach.changeState("GameWorld");
+        } else if (pressed >= '0' && pressed <= '9') {
+            int keyNUm = getNumericValue(pressed);
+            seed.append(keyNUm);
+        }
     }
 
     @Override
@@ -23,7 +34,6 @@ public class EnterSeed implements GameState {
 
     @Override
     public void enter() {
-        seed = new StringBuilder();
         StdDraw.clear(StdDraw.BLACK);
         render();
     }
