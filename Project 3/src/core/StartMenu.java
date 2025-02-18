@@ -31,13 +31,14 @@ public class StartMenu implements GameState{
     }
 
     @Override
-    public void enter() {
+    public void enter(String str) {
         StdDraw.setCanvasSize(800, 600);
         render();
     }
 
     @Override
-    public void exit() {
+    public String exit() {
         StdDraw.clear();
+        return "Exit";
     }
 }

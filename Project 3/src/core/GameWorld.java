@@ -1,7 +1,14 @@
 package core;
 
-public class GameWorld implements GameState{
+import edu.princeton.cs.algs4.StdDraw;
+import tileengine.TERenderer;
 
+import static core.World.HEIGHT;
+import static core.World.WIDTH;
+
+public class GameWorld implements GameState{
+    private TERenderer ter;
+    private World myWorld;
 
 
     @Override
@@ -11,16 +18,19 @@ public class GameWorld implements GameState{
 
     @Override
     public void render() {
-
+        ter.renderFrame(myWorld.getWorld());
     }
 
     @Override
-    public void enter() {
-
+    public void enter(String str) {
+        ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        myWorld = World.createWorld(Integer.parseInt(str.toString()));
+        ter.renderFrame(myWorld.getWorld());
     }
 
     @Override
-    public void exit() {
-
+    public String exit() {
+        StdDraw.clear();
     }
 }

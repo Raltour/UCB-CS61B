@@ -11,7 +11,7 @@ public class StateMachine {
         gameStates.put("StartMenu", new StartMenu());
         gameStates.put("EnterSeed", new EnterSeed());
         curr = "StartMenu";
-        gameStates.get(curr).enter();
+        gameStates.get(curr).enter("Start");
     }
 
     public void update(int pressed) {
@@ -23,8 +23,8 @@ public class StateMachine {
     }
 
     public void changeState(String to) {
-        gameStates.get(curr).exit();
+        String str = gameStates.get(curr).exit();
         curr = to;
-        gameStates.get(to).enter();
+        gameStates.get(to).enter(str);
     }
 }
