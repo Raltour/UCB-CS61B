@@ -14,7 +14,17 @@ public class GameWorld implements GameState{
 
     @Override
     public void update(int pressed) {
-
+        if (pressed == 'q' || pressed == 'Q') {
+            System.exit(0);
+        } else if (pressed == 'w' || pressed == 'W') {
+            myWorld.userAvater.moveUp();
+        } else if (pressed == 's' || pressed == 'S') {
+            myWorld.userAvater.moveDown();
+        } else if (pressed == 'd' || pressed == 'D') {
+            myWorld.userAvater.moveRight();
+        } else if (pressed == 'a' || pressed == 'A') {
+            myWorld.userAvater.moveLeft();
+        }
     }
 
     @Override
