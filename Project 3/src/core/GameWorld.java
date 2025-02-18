@@ -10,6 +10,7 @@ public class GameWorld implements GameState{
     private TERenderer ter;
     private World myWorld;
 
+    public GameWorld() {}
 
     @Override
     public void update(int pressed) {
@@ -32,5 +33,6 @@ public class GameWorld implements GameState{
     @Override
     public String exit() {
         StdDraw.clear();
+        return "Exit";
     }
 }

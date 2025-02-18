@@ -10,6 +10,7 @@ public class StateMachine {
         gameStates = new HashMap<>();
         gameStates.put("StartMenu", new StartMenu());
         gameStates.put("EnterSeed", new EnterSeed());
+        gameStates.put("GameWorld", new GameWorld());
         curr = "StartMenu";
         gameStates.get(curr).enter("Start");
     }
