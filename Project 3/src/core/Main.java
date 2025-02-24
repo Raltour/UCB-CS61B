@@ -4,8 +4,6 @@ import edu.princeton.cs.algs4.StdDraw;
 import tileengine.TERenderer;
 import tileengine.Tileset;
 
-import java.awt.*;
-
 import static core.World.HEIGHT;
 import static core.World.WIDTH;
 import static edu.princeton.cs.algs4.StdDraw.*;

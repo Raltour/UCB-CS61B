@@ -2,11 +2,9 @@ package core;
 
 import edu.princeton.cs.algs4.StdDraw;
 import tileengine.TERenderer;
-import tileengine.Tileset;
 
 import static core.World.HEIGHT;
 import static core.World.WIDTH;
-import static edu.princeton.cs.algs4.StdDraw.*;
 
 public class GameWorld implements GameState{
     private TERenderer ter;
