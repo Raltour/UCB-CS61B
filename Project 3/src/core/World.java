@@ -4,6 +4,9 @@ import tileengine.TETile;
 import tileengine.Tileset;
 
 import static utils.RandomUtils.uniform;
+import static utils.FileUtils.writeFile;
+import static utils.FileUtils.readFile;
+import static utils.FileUtils.fileExists;
 
 import java.util.Random;
 
@@ -19,6 +22,8 @@ public class World {
     public static final int generateTry = 25;
     public int roomNumber = 0;
     public avatar userAvater;
+    public static final String SAVE_WORLD_FILE = "save.txt";
+
 
 
     private TETile[][] myworld;
@@ -32,6 +37,30 @@ public class World {
         rand = new Random(seed);
         this.randomGenerate();
         this.userAvater = new avatar();
+    }
+
+    public World(String fileName) {
+        if (fileExists(fileName)) {
+            this.myworld = new TETile[WIDTH][HEIGHT];
+            fillWorldWithBlanck(myworld);
+            String save = readFile(SAVE_WORLD_FILE);
+            String[] lines = save.split("\r?\n");
+            for (int y = 0; y < HEIGHT; y++) {
+                String[] line = lines[y].split(" ");
+                for (int x = 0; x < WIDTH; x++) {
+                    if (line[x].equals("0")) {
+                        myworld[x][y] = Tileset.NOTHING;
+                    } else if (line[x].equals("1")) {
+                        myworld[x][y] = Tileset.WALL;
+                    } else if (line[x].equals("2")) {
+                        myworld[x][y] = Tileset.FLOOR;
+                    } else if (line[x].equals("3")) {
+                        myworld[x][y] = Tileset.AVATAR;
+                        userAvater = new avatar(x, y);
+                    }
+                }
+            }
+        }
     }
 
     public class avatar {
@@ -49,6 +78,11 @@ public class World {
                     break;
                 }
             }
+        }
+
+        public avatar(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
         public void moveUp() {
@@ -243,6 +277,10 @@ public class World {
         return new World(seed);
     }
 
+    public static World loadWorld() {
+        return new World(SAVE_WORLD_FILE);
+    }
+
     public TETile[][] getWorld() {
         return myworld;
     }
@@ -257,6 +295,27 @@ public class World {
         Room room = new Room(x1, y1, x2, y2);
         room.generateRoom(myworld);
         room.generateNextRoom(myworld);
+    }
+
+    public void save() {
+        StringBuilder text = new StringBuilder();
+
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                if (myworld[x][y] == Tileset.NOTHING) {
+                    text.append('0'  + ' ');
+                } else if (myworld[x][y] == Tileset.WALL) {
+                    text.append('1' + ' ');
+                } else if (myworld[x][y] == Tileset.FLOOR) {
+                    text.append('2');
+                } else if (myworld[x][y] == Tileset.AVATAR) {
+                    text.append('3');
+                }
+            }
+            text.append('\n');
+        }
+
+        writeFile(SAVE_WORLD_FILE, text.toString());
     }
 
 

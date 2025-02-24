@@ -2,13 +2,16 @@ package core;
 
 import edu.princeton.cs.algs4.StdDraw;
 import tileengine.TERenderer;
+import tileengine.Tileset;
 
 import static core.World.HEIGHT;
 import static core.World.WIDTH;
+import static edu.princeton.cs.algs4.StdDraw.*;
 
 public class GameWorld implements GameState{
     private TERenderer ter;
     private World myWorld;
+
 
     public GameWorld() {}
 
@@ -24,25 +27,47 @@ public class GameWorld implements GameState{
             myWorld.userAvater.moveRight();
         } else if (pressed == 'a' || pressed == 'A') {
             myWorld.userAvater.moveLeft();
+        } else if (pressed == 'o' || pressed == 'O') {
+            myWorld.save();
+        } else if (pressed == 'n' || pressed == 'N') {
+            mach.changeState("EnterSeed");
         }
     }
 
     @Override
     public void render() {
         ter.renderFrame(myWorld.getWorld());
+//        double mX = mouseX();
+//        double mY = mouseY();
+//        StringBuilder text = new StringBuilder();
+//        text.append("Tile: ");
+//        text.append(mX + "\t" + mY);
+//        if (myWorld.getWorld()[mX][mY] == Tileset.WALL) {
+//            text.append("Wall");
+//        } else if (myWorld.getWorld()[mX][mY] == Tileset.FLOOR) {
+//            text.append("Floor");
+//        } else if (myWorld.getWorld()[mX][mY] == Tileset.AVATAR) {
+//            text.append("Avatar");
+//        } else if (myWorld.getWorld()[mX][mY] == Tileset.NOTHING) {
+//            text.append("Nothing");
+//        }
+//        StdDraw.text(0.5, 0.5, text.toString());
     }
 
     @Override
-    public void enter(String str) {
+    public void enter() {
         ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
-        myWorld = World.createWorld(Integer.parseInt(str.toString()));
+        if (mach.state.equals("Load")) {
+            myWorld = World.loadWorld();
+        } else {
+            myWorld = World.createWorld(Integer.parseInt(mach.state));
+        }
         ter.renderFrame(myWorld.getWorld());
     }
 
     @Override
-    public String exit() {
+    public void exit() {
         StdDraw.clear();
-        return "Exit";
     }
 }

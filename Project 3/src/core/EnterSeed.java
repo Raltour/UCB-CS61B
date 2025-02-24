@@ -33,14 +33,14 @@ public class EnterSeed implements GameState {
     }
 
     @Override
-    public void enter(String str) {
+    public void enter() {
         StdDraw.clear(StdDraw.BLACK);
         render();
     }
 
     @Override
-    public String exit() {
+    public void exit() {
         StdDraw.clear();
-        return seed.toString();
+        mach.state = seed.toString();
     }
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class StateMachine {
     private HashMap<String, GameState> gameStates;
     private String curr;
+    public String state;
 
     public StateMachine() {
         gameStates = new HashMap<>();
@@ -12,7 +13,7 @@ public class StateMachine {
         gameStates.put("EnterSeed", new EnterSeed());
         gameStates.put("GameWorld", new GameWorld());
         curr = "StartMenu";
-        gameStates.get(curr).enter("Start");
+        gameStates.get(curr).enter();
     }
 
     public void update(int pressed) {
@@ -24,8 +25,10 @@ public class StateMachine {
     }
 
     public void changeState(String to) {
-        String str = gameStates.get(curr).exit();
+        gameStates.get(curr).exit();
         curr = to;
-        gameStates.get(to).enter(str);
+        gameStates.get(to).enter();
     }
+
+
 }

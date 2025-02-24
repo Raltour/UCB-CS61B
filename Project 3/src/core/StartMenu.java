@@ -13,6 +13,9 @@ public class StartMenu implements GameState{
             System.exit(0);
         } else if (pressed == 'n' || pressed == 'N') {
             mach.changeState("EnterSeed");
+        } else if (pressed == 'l' || pressed == 'L') {
+            mach.state = "Load";
+            mach.changeState("GameWorld");
         }
     }
 
@@ -31,14 +34,13 @@ public class StartMenu implements GameState{
     }
 
     @Override
-    public void enter(String str) {
+    public void enter() {
         StdDraw.setCanvasSize(800, 600);
         render();
     }
 
     @Override
-    public String exit() {
+    public void exit() {
         StdDraw.clear();
-        return "Exit";
     }
 }
